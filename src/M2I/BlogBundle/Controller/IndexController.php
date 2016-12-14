@@ -15,22 +15,11 @@ class IndexController extends Controller
         // tous les articles
         $articleList = $articleRepository->findAll();
 
-        // get article id = 2 (un tableau)
-        $article2 = $articleRepository->find(2);
-        $article2 = $articleRepository->findById(2);
-
-        // get article avc title = 'Article 3' (un tableau)
-        $article3 = $articleRepository->findByTitle('Article 3');
-
-        // recupere l'article 3
-        $oneArticle = $articleRepository->findOneById(3);
-
-        dump($article2);
-        dump($article3);
-        die();
-
         return $this->render(
-            'M2IBlogBundle:Index:index.html.twig'
+            'M2IBlogBundle:Index:index.html.twig',
+            array(
+                'articleList' => $articleList
+            )
         );
     }
 
