@@ -4,3 +4,6 @@ m2_i_blog_homepage:
 m2_i_blog_contactpage:
     path:     /contact
     defaults: { _controller: M2IBlogBundle:Index:contact }
+m2_i_blog_aboutpage:
+    path:     /about
+    defaults: { _controller: M2IBlogBundle:Index:about }
