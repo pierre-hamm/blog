@@ -4,9 +4,10 @@
  <div class="content-grid">
     {% for article in articleList %}
         <div class="content-grid-info">
-            <img src="{{ asset('images/post1.jpg') }}" alt=""/>
+            <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
             <div class="post-info">
-                <h4><a href="single.html">{{ article.title }}</a>  July 30, 2014 / 27 Comments</h4>
+                <h4><a href="single.html">{{ article.title }}</a>  
+                    {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
                 <p>{{ article.description }}</p>
                 <a href="single.html"><span></span>READ MORE</a>
             </div>
