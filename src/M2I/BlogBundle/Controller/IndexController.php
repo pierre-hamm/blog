@@ -10,4 +10,9 @@ class IndexController extends Controller
     {
         return $this->render('M2IBlogBundle:Index:index.html.twig');
     }
+
+    public function contactAction()
+    {
+    	return $this->render('M2IBlogBundle:Index:contact.html.twig');
+    }
 }
