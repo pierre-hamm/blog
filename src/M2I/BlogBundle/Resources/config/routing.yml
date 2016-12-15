@@ -10,3 +10,6 @@ m2_i_blog_aboutpage:
 m2_i_blog_detail_article:
     path:    /detail/{idArticle}
     defaults: { _controller: M2IBlogBundle:Index:detail }
+test:
+    path:    /test
+    defaults: { _controller: M2IBlogBundle:Index:test }
