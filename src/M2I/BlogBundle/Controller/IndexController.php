@@ -10,10 +10,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
-    public function addAction()
+    public function addAction(Request $request)
     {
         $article = new Article();
 
@@ -30,6 +31,18 @@ class IndexController extends Controller
            ;
 
         $form = $formBuilder->getForm();
+
+        // Si la requête est en POST
+        if ($request->isMethod('POST')) {
+            // On fait le lien Requête <-> Formulaire
+            // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+            $form->handleRequest($request);
+
+            // On vérifie que les valeurs entrées sont correctes
+            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+            if ($form->isValid()) {
+            }
+        }
 
         return $this->render(
             'M2IBlogBundle:Index:add_article.html.twig',
