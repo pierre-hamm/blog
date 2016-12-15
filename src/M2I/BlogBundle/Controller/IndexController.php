@@ -32,4 +32,14 @@ class IndexController extends Controller
     {
     	return $this->render('M2IBlogBundle:Index:about.html.twig');
     }
+
+    public function detailAction($idArticle)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $articleRepository = $em->getRepository('M2IBlogBundle:Article');        
+
+        $article = $articleRepository->findOneById($idArticle);
+
+        return $this->render('M2IBlogBundle:Index:detail.html.twig', array('article' => $article));
+    }
 }
