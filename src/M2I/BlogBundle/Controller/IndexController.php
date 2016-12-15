@@ -5,9 +5,38 @@ namespace M2I\BlogBundle\Controller;
 use M2I\BlogBundle\Entity\Article;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class IndexController extends Controller
 {
+    public function addAction()
+    {
+        $article = new Article();
+
+        $formBuilder = $this
+            ->container
+            ->get('form.factory')
+            ->createBuilder(FormType::class, $article);
+
+        $formBuilder
+            ->add('title', TextType::class)
+            ->add('description', TextareaType::class)
+            ->add('createDate', DateType::class)
+            ->add('save', SubmitType::class)  
+           ;
+
+        $form = $formBuilder->getForm();
+
+        return $this->render(
+            'M2IBlogBundle:Index:add_article.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
     public function testAction()
     {
         // Creation de notre entity Article
