@@ -7,9 +7,10 @@
             <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
             <div class="post-info">
                 <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>  
-                    {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
+                    {{ article.createDate | date("d/m/Y") }} / 27 Comments 
+                    <a href="{{ path('m2_i_blog_edit_article', {'idArticle': article.id}) }}">Edit</a></h4>
                 <p>{{ article.description }}</p>
-                <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a>
+                <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a> 
             </div>
         </div>
     {% endfor %}

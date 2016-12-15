@@ -14,6 +14,40 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
+    public function editArticleAction(Request $request, $idArticle)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $articleRepository = $em->getRepository('M2IBlogBundle:Article');
+
+        $editArticle = $articleRepository->findOneById($idArticle);
+
+        $formBuilder = $this
+            ->container
+            ->get('form.factory')
+            ->createBuilder(FormType::class, $editArticle);
+
+        $formBuilder
+            ->add('title', TextType::class)
+            ->add('description', TextareaType::class)
+            ->add('createDate', DateType::class)
+            ->add('save', SubmitType::class)
+        ;
+
+        $form = $formBuilder->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->flush();
+            }
+        }
+
+        return $this->render(
+            'M2IBlogBundle:Index:edit_article.html.twig',
+            array('myForm' => $form->createView())
+        );
+    }
+
     public function addAction(Request $request)
     {
         $article = new Article();
