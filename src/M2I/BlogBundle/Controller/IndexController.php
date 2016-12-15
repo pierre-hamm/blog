@@ -35,12 +35,18 @@ class IndexController extends Controller
         // Si la requête est en POST
         if ($request->isMethod('POST')) {
             // On fait le lien Requête <-> Formulaire
-            // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+            // À partir de maintenant, la variable $article contient les valeurs entrées dans le formulaire par le visiteur
             $form->handleRequest($request);
 
             // On vérifie que les valeurs entrées sont correctes
             // (Nous verrons la validation des objets en détail dans le prochain chapitre)
             if ($form->isValid()) {
+                $em = $this->container->get('doctrine.orm.entity_manager');
+
+                $em->persist($article);
+                $em->flush();
+
+                return $this->redirectToRoute('m2_i_blog_add_article');
             }
         }
 
