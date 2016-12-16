@@ -3,13 +3,9 @@
 namespace M2I\BlogBundle\Controller;
 
 use M2I\BlogBundle\Entity\Article;
+use M2I\BlogBundle\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
@@ -21,19 +17,10 @@ class IndexController extends Controller
 
         $editArticle = $articleRepository->findOneById($idArticle);
 
-        $formBuilder = $this
+        $form = $this
             ->container
             ->get('form.factory')
-            ->createBuilder(FormType::class, $editArticle);
-
-        $formBuilder
-            ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('createDate', DateType::class)
-            ->add('save', SubmitType::class)
-        ;
-
-        $form = $formBuilder->getForm();
+            ->create(ArticleType::class, $article);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -52,19 +39,10 @@ class IndexController extends Controller
     {
         $article = new Article();
 
-        $formBuilder = $this
+        $form = $this
             ->container
             ->get('form.factory')
-            ->createBuilder(FormType::class, $article);
-
-        $formBuilder
-            ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('createDate', DateType::class)
-            ->add('save', SubmitType::class)  
-           ;
-
-        $form = $formBuilder->getForm();
+            ->create(ArticleType::class, $article);
 
         // Si la requête est en POST
         if ($request->isMethod('POST')) {
