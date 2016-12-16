@@ -10,6 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
+    public function deleteArticleAction($idArticle)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $articleRepository = $em->getRepository('M2IBlogBundle:Article');
+
+        $article = $articleRepository->findOneById($idArticle);
+
+        $em->remove($article);
+        $em->flush();
+
+        return $this->redirectToRoute('m2_i_blog_homepage');
+    }
+
     public function editArticleAction(Request $request, $idArticle)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');

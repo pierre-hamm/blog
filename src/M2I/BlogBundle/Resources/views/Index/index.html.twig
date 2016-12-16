@@ -8,7 +8,9 @@
             <div class="post-info">
                 <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>  
                     {{ article.createDate | date("d/m/Y") }} / 27 Comments 
-                    <a href="{{ path('m2_i_blog_edit_article', {'idArticle': article.id}) }}">Edit</a></h4>
+                    <a href="{{ path('m2_i_blog_edit_article', {'idArticle': article.id}) }}">Edit</a>
+                    <a href="{{ path('m2_i_blog_delete_article', {'idArticle': article.id}) }}">Delete</a>
+                </h4>
                 <p>{{ article.description }}</p>
                 <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a> 
             </div>
