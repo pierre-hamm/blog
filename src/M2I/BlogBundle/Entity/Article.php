@@ -42,6 +42,11 @@ class Article
      */
     private $createDate;
 
+    /**
+     * @ORM\OneToOne(targetEntity="M2I\BlogBundle\Entity\Image", cascade={"persist"})
+     */
+    private $image;
+
     public function __construct()
     {
         $this->createDate = new \DateTime();
@@ -124,5 +129,28 @@ class Article
     public function getCreateDate()
     {
         return $this->createDate;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \M2I\BlogBundle\Entity\Image $image
+     * @return Article
+     */
+    public function setImage(\M2I\BlogBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \M2I\BlogBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

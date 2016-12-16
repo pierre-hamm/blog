@@ -3,6 +3,7 @@
 namespace M2I\BlogBundle\Controller;
 
 use M2I\BlogBundle\Entity\Article;
+use M2I\BlogBundle\Entity\Image;
 use M2I\BlogBundle\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,6 +11,30 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
+    public function testCreateImageAction()
+    {
+        // Creation de l'entity image
+        $image = new Image();
+        $image->setUrl('images/post1.jpg');
+        $image->setAlt('post1');
+
+        // Creation de l'entity article
+        $article = new Article();
+        $article->setTitle('Titre link image');
+        $article->setDescription('Description link image');
+
+        // Liaison entre les 2 objects (on met l'id_image dans notre article)
+        $article->setImage($image);
+
+        // on sauvegarde
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em->persist($article);
+        $em->persist($image);
+        $em->flush();
+
+        return new Response('<html><body></body></html>');
+    }
+
     public function deleteArticleAction($idArticle)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
