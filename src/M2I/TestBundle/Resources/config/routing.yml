@@ -1,0 +1,6 @@
+m2_i_test_homepage:
+    path:     /tmp
+    defaults: { _controller: M2ITestBundle:Default:index }
+test_exo2:
+    path:     /test/exo2
+    defaults: { _controller: M2ITestBundle:Test:exo2 }

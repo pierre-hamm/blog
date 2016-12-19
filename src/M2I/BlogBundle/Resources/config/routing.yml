@@ -1,6 +1,9 @@
 m2_i_blog_homepage:
     path:     /
     defaults: { _controller: M2IBlogBundle:Index:index }
+m2_i_blog_testrouting:
+    path:     /{idArticle}
+    defaults: { _controller: M2IBlogBundle:Index:testRouting }
 m2_i_blog_contactpage:
     path:     /contact
     defaults: { _controller: M2IBlogBundle:Index:contact }
