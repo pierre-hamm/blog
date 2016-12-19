@@ -4,7 +4,9 @@ namespace M2I\BlogBundle\Controller;
 
 use M2I\BlogBundle\Entity\Article;
 use M2I\BlogBundle\Entity\Image;
+use M2I\BlogBundle\Entity\Comment;
 use M2I\BlogBundle\Form\ArticleType;
+use M2I\BlogBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,7 +60,7 @@ class IndexController extends Controller
         $form = $this
             ->container
             ->get('form.factory')
-            ->create(ArticleType::class, $article);
+            ->create(ArticleType::class, $editArticle);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -159,13 +161,44 @@ class IndexController extends Controller
     	return $this->render('M2IBlogBundle:Index:about.html.twig');
     }
 
-    public function detailAction($idArticle)
+    public function detailAction(Request $request, $idArticle)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $articleRepository = $em->getRepository('M2IBlogBundle:Article');        
+        $commentRepository = $em->getRepository('M2IBlogBundle:Comment');
 
-        $article = $articleRepository->findOneById($idArticle);
+        $article = $articleRepository->findOneById($idArticle);        
+        $lastCommentList = $commentRepository->myLastCommentList($article);
 
-        return $this->render('M2IBlogBundle:Index:detail.html.twig', array('article' => $article));
+        $comment = new Comment();
+
+        $form = $this
+            ->container
+            ->get('form.factory')
+            ->create(CommentType::class, $comment);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $comment->setCreateDate(new \DateTime());
+
+                $article->addCommentList($comment);
+
+                $em->persist($comment);
+                $em->flush();
+
+                // [TODO] add a redirect
+            }
+        }
+
+
+        return $this->render(
+            'M2IBlogBundle:Index:detail.html.twig',
+            array(
+                'article' => $article,
+                'comment_form' => $form->createView(),
+                'lastCommentList' => $lastCommentList,
+            )
+        );
     }
 }

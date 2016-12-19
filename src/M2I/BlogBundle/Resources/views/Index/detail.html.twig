@@ -9,7 +9,15 @@
                     {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
                 <p>{{ article.description }}</p>
                 <a href="single.html"><span></span>READ MORE</a>
+
+                {% for comment in lastCommentList %}
+                	<p>Content : {{ comment.content }} / author : {{ comment.author }} / date : {{ comment.createDate|date }}</p>
+                {% endfor %}
+
             </div>
         </div>
  </div>
+
+{{ form(comment_form) }}
+
 {% endblock %}
