@@ -150,7 +150,7 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return $this->roles;
+        return array('ROLE_USER');
     }
 
     public function eraseCredentials()
