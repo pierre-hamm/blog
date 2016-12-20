@@ -1,6 +1,8 @@
 Command utile
 =======================
 
+email : pi3rre.hamm@gmail.com
+
 Installation Projet symfony :
 
     composer create-project symfony/framework-standard-edition M2I "2.8.*"
