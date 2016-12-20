@@ -25,3 +25,6 @@ test_create_image:
 test:
     path:    /test
     defaults: { _controller: M2IBlogBundle:Index:test }
+my_test:
+    path: /add_user
+    defaults: { _controller: M2IBlogBundle:Index:addUser }

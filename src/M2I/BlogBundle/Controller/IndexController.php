@@ -5,6 +5,7 @@ namespace M2I\BlogBundle\Controller;
 use M2I\BlogBundle\Entity\Article;
 use M2I\BlogBundle\Entity\Image;
 use M2I\BlogBundle\Entity\Comment;
+use M2I\UserBundle\Entity\User;
 use M2I\BlogBundle\Form\ArticleType;
 use M2I\BlogBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,32 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
 {
+    public function addUserAction()
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+     $listNames = array('Alexandre', 'Marine', 'Anna');
+
+    foreach ($listNames as $name) {
+      // On crée l'utilisateur
+      $user = new User;
+
+      // Le nom d'utilisateur et le mot de passe sont identiques pour l'instant
+      $user->setUsername($name);
+      $user->setPassword($name);
+
+      // On ne se sert pas du sel pour l'instant
+      $user->setSalt('');
+      // On définit uniquement le role ROLE_USER qui est le role de base
+      $user->setRoles(array('ROLE_USER'));
+
+      // On le persiste
+      $em->persist($user);
+    }
+
+    // On déclenche l'enregistrement
+    $em->flush();        
+    }
+
     public function testCreateImageAction()
     {
         // Creation de l'entity image
@@ -141,7 +168,7 @@ class IndexController extends Controller
         $articleRepository = $em->getRepository('M2IBlogBundle:Article');
 
         // tous les articles
-        $articleList = $articleRepository->findAll();
+        $articleList = $articleRepository->findAllOrderByCreateDate();
 
         return $this->render(
             'M2IBlogBundle:Index:index.html.twig',

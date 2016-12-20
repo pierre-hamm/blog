@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+	public function findAllOrderByCreateDate()
+	{
+		$qb = $this->createQueryBuilder('article');
+
+		$qb->orderBy('article.createDate', 'DESC');
+
+		return $qb->getQuery()->getResult();
+	}
 }

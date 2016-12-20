@@ -1,3 +1,6 @@
 m2_i_user_homepage:
     path:     /
     defaults: { _controller: M2IUserBundle:Default:index }
+my_test:
+	path: /add_user
+    defaults: { _controller: M2IUserBundle:IndexController:index }
